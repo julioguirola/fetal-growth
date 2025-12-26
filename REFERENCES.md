@@ -1,0 +1,6 @@
+1. Gardosi J, Francis A. A customized standard to assess fetal growth in a US population. Am J Obstet Gynecol 2009;201:25.e1-7.
+2. Gardosi J, Clausson B, Francis A. The value of customised centiles in assessing perinatal mortality risk associated with parity and maternal size. BJOG 2009;116:1356–1363.
+3. Figueras F, Meler E, Iraola A, Eixarch E, Coll O, Figueras J, Francis A, Gratacos E, Gardos J. Customized birthweight standards for a Spanish population. European Journal of Obstetrics & Gynecology and Reproductive Biology 136 (2008) 20–24.
+4. Gardosi J: et all. GROW documentation.
+5. Hutcheon J, Zhang X, Cnattingius S, Kramer M, Platt R. Customised birthweight percentiles: does adjusting for maternal characteristics matter? BJOG 2008;115:1397–1404. 
+6. Ego A, Subtil D, Grange G, Thiebaugeorges O, Senat MV, Vayssiere C, Zeitlin J. Customised versus population-based birth weight standards for identifying growth restricted infants: a French multicenter study. Am J Obstet Gynecol. 2006;194:1042–1049. 
