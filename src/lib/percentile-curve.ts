@@ -1,5 +1,3 @@
-import { ChartConfig } from "@/components/ui/chart";
-
 const coeficents = {
     F: {
         "0.01": [-1.89823055117316e+0,	6.94217690139681e-1,	-2.49755007746458e-2,	5.33634489533981e-4,	-4.7692763424938e-6],
@@ -40,31 +38,6 @@ function curve (b0: number, b1: number, b2: number, b3: number, b4: number) {
     )
 }
 
-
-function curveBuilder (sex: 'F' | 'M', centile: Centile) {
+export function curveBuilder (sex: 'F' | 'M', centile: Centile) {
     return curve(...(coeficents[sex][centile] as [number, number, number, number, number]));
 }
-
-const rangoSemanas = Array.from({length: 40 - 14 + 1}, (_, i) => i + 14);
-
-export const chartData = rangoSemanas.map(w => {
-    let efws: Record<string, number> = {};
-    for (const centile of centiles) {
-        efws[`EFW_${centile.replace('.','_')}`] = curveBuilder('F', centile)(w);
-    }
-    return {
-        week: w,
-        ...efws,
-    }
-});
-
-export const chartDataM = rangoSemanas.map(w => {
-    let efws: Record<string, number> = {};
-    for (const centile of centiles) {
-        efws[`EFW_${centile.replace('.','_')}`] = curveBuilder('M', centile)(w);
-    }
-    return {
-        week: w,
-        ...efws,
-    }
-});
