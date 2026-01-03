@@ -1,10 +1,9 @@
 import { centiles, curveBuilder } from "@/lib/percentile-curve";
-import {
-  ChartContainer,
-  type ChartConfig } from "@/components/ui/chart";
+import { ChartContainer, type ChartConfig, ChartLegend, ChartLegendContent } from "@/components/ui/chart";
 import { CartesianGrid, XAxis, YAxis, LineChart, Line } from "recharts"
 
 const rangoSemanas = Array.from({length: 40 - 14 + 1}, (_, i) => i + 14);
+const randomColors = ["#007ebc", "#ff0000", "#e66633", "#0a7500", "#74c0fc", "#0a7500", "#e66633", "#ff0000", "#007ebc", "#000000", "#000000"];
 
 const chartData = (sex: 'M' | 'F') => rangoSemanas.map(w => {
     let efws: Record<string, number> = {};
@@ -54,32 +53,36 @@ const chartConfig = {
 } satisfies ChartConfig
 
 export default function Grafica({sex} : {sex: 'F' | 'M'}) {
-    return <ChartContainer config={chartConfig} className="h-150 w-[90%]">
-        <LineChart accessibilityLayer data={chartData(sex)}>
-          <CartesianGrid vertical={true} horizontal={true} />
-          <XAxis
-            dataKey="week"
-            tickLine={false}
-            tickMargin={10}
-            axisLine={false}
-          />
-          <YAxis
-            dataKey="EFW_0_99"
-            tickLine={false}
-            tickMargin={10}
-            axisLine={false}
-            tickCount={20}
-          />
-          {centiles.map(centile => (
-            <Line
-              key={centile}
-              type="natural"
-              dataKey={`EFW_${centile.replace('.','_')}`}
-              stroke={sex === 'F' ? "pink" : "#086bc1"}
-              dot={false}
-            />
-          ))}
-        </LineChart>
+    return (
+        <ChartContainer config={chartConfig} className="h-150 w-[98%]">
+            <LineChart accessibilityLayer data={chartData(sex)}>
+                <ChartLegend content={<ChartLegendContent />} className="flex flex-wrap" />
+                <CartesianGrid vertical={true} horizontal={true} />
+                <XAxis
+                    dataKey="week"
+                    tickLine={false}
+                    tickMargin={10}
+                    axisLine={false}
+                />
+                <YAxis
+                    dataKey="EFW_0_99"
+                    tickLine={false}
+                    tickMargin={10}
+                    axisLine={false}
+                    tickCount={25}
+                />
+                {centiles.map((centile, index) => (
+                    <Line
+                    key={centile}
+                    type="natural"
+                    dataKey={`EFW_${centile.replace('.','_')}`}
+                    stroke={randomColors[index]}
+                    dot={false}
+                    strokeWidth={2}
+                    />
+                ))}
+            </LineChart>
       </ChartContainer>
+      );
 }
 
