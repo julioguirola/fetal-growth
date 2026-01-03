@@ -30,6 +30,7 @@ const coeficents = {
 type Centile = "0.01" | "0.025" | "0.05" | "0.1" | "0.25" | "0.5" | "0.75" | "0.9" | "0.95" | "0.975" | "0.99";
 
 export const centiles: Centile[] = ["0.99", "0.975", "0.95", "0.9", "0.75", "0.5", "0.25", "0.1", "0.05", "0.025", "0.01"];
+export const semanas = Array.from({length: 40 - 14 + 1}, (_, i) => i + 14);
 
 function curve (b0: number, b1: number, b2: number, b3: number, b4: number) {
     return (t: number) => Math.pow(

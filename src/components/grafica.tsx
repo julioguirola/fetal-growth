@@ -1,11 +1,11 @@
 import { centiles, curveBuilder } from "@/lib/percentile-curve";
 import { ChartContainer, type ChartConfig, ChartLegend, ChartLegendContent } from "@/components/ui/chart";
 import { CartesianGrid, XAxis, YAxis, LineChart, Line } from "recharts"
+import { semanas } from "@/lib/percentile-curve";
 
-const rangoSemanas = Array.from({length: 40 - 14 + 1}, (_, i) => i + 14);
-const randomColors = ["#007ebc", "#ff0000", "#e66633", "#0a7500", "#74c0fc", "#0a7500", "#e66633", "#ff0000", "#007ebc", "#000000", "#000000"];
+const colors = ["#007ebc", "#ff0000", "#e66633", "#0a7500", "#74c0fc", "#0a7500", "#e66633", "#ff0000", "#007ebc", "#000000", "#000000"];
 
-const chartData = (sex: 'M' | 'F') => rangoSemanas.map(w => {
+const chartData = (sex: 'M' | 'F') => semanas.map(w => {
     let efws: Record<string, number> = {};
     for (const centile of centiles) {
         efws[`EFW_${centile.replace('.','_')}`] = curveBuilder(sex, centile)(w);
@@ -76,7 +76,7 @@ export default function Grafica({sex} : {sex: 'F' | 'M'}) {
                     key={centile}
                     type="natural"
                     dataKey={`EFW_${centile.replace('.','_')}`}
-                    stroke={randomColors[index]}
+                    stroke={colors[index]}
                     dot={false}
                     strokeWidth={2}
                     />
