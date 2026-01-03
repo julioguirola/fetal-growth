@@ -11,18 +11,23 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { semanas } from "@/lib/percentile-curve";
+import { semanas, calcPercentile } from "@/lib/percentile-curve";
 import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 export default function Home() {
   const [sex, setSex] = useState<'M' | 'F'>('M')
+  const [weeks, setWeeks] = useState<number | null>(null);
+  const [days, setDays] = useState<number | null>(null);
+  const [weight, setWeight] = useState<number | null>(null);
+  const [percentile, setPercentile] = useState<number | null>(null);
 
   return (
     <div className="w-svw h-svh flex flex-col items-center justify-center gap-2">
       <h1 className="font-bold text-2xl">Fetal Growth</h1>
-      <div className="flex flex-col w-[90%] p-8 gap-4 items-center">
+      <div className="flex flex-col w-[90%] p-4 gap-4 items-center">
         <div className="flex item-center gap-4">
-          <Select>
+          <Select onValueChange={value => setWeeks(Number(value))}>
             <SelectTrigger>
               <SelectValue placeholder="Semanas" />
             </SelectTrigger>
@@ -32,12 +37,12 @@ export default function Home() {
               ))}
             </SelectContent>
           </Select>
-          <Select>
+          <Select onValueChange={value => setDays(Number(value))}>
             <SelectTrigger>
               <SelectValue placeholder="Dias" />
             </SelectTrigger>
             <SelectContent className="h-fit">
-              {Array.from({length: 7}, (_, i) => i + 1).map(dia => (
+              {Array.from({ length: 8 }, (_, i) => i).map(dia => (
                 <SelectItem key={dia} value={dia.toString()}>{dia} días</SelectItem>
               ))}
             </SelectContent>
@@ -49,9 +54,17 @@ export default function Home() {
             <Label htmlFor="sex-switch" className="select-none">{sex === 'M' ? 'Masculino' : 'Femenino'}</Label>
           </div>
           <Label htmlFor="weight-input" className="select-none">Peso (g)</Label>
-          <Input id="weight-input" type="number" className="w-35" placeholder="300" min={0} max={5000}/>
+          <Input id="weight-input" type="number" className="w-35" placeholder="300" min={0} max={5000} onChange={e => setWeight(Number(e.target.value))} />
+        </div>
+        <div className="flex item-center gap-4 justify-evenly w-full">
+          <span className="text-center">Resultado: {percentile !== null ? `${percentile}%` : "N/A"}</span>
+          <Button onClick={() => {
+            if (weeks !== null && days !== null && weight !== null) setPercentile(calcPercentile(sex, weight, weeks, days))
+          }
+          } className="bg-blue-500">Calcular</Button>
         </div>
       </div>
+
       <Grafica sex={sex} />
     </div>
   );
