@@ -18,7 +18,7 @@ import { Button } from "@/components/ui/button";
 export default function Home() {
   const [sex, setSex] = useState<'M' | 'F'>('M')
   const [weeks, setWeeks] = useState<number | null>(null);
-  const [days, setDays] = useState<number | null>(null);
+  const [days, setDays] = useState<number | null>(0);
   const [weight, setWeight] = useState<number | null>(null);
   const [percentile, setPercentile] = useState<number | null>(null);
 
@@ -59,13 +59,15 @@ export default function Home() {
         <div className="flex item-center gap-4 justify-evenly w-full">
           <span className="text-center">Resultado: {percentile !== null ? `${percentile}%` : "N/A"}</span>
           <Button onClick={() => {
-            if (weeks !== null && days !== null && weight !== null) setPercentile(calcPercentile(sex, weight, weeks, days))
+            if (weeks !== null && days !== null && weight !== null) {
+              setPercentile(calcPercentile(sex, weight, weeks, days))
+            }
           }
           } className="bg-blue-500">Calcular</Button>
         </div>
       </div>
 
-      <Grafica sex={sex} />
+      <Grafica sex={sex} x={weeks} y={weight} percentile={percentile} />
     </div>
   );
 }

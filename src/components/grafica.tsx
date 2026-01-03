@@ -1,6 +1,6 @@
 import { centiles, curveBuilder } from "@/lib/percentile-curve";
 import { ChartContainer, type ChartConfig, ChartLegend, ChartLegendContent } from "@/components/ui/chart";
-import { CartesianGrid, XAxis, YAxis, LineChart, Line } from "recharts"
+import { CartesianGrid, XAxis, YAxis, LineChart, Line, ReferenceDot } from "recharts"
 import { semanas } from "@/lib/percentile-curve";
 
 const colors = ["#007ebc", "#ff0000", "#e66633", "#0a7500", "#74c0fc", "#0a7500", "#e66633", "#ff0000", "#007ebc", "#000000", "#000000"];
@@ -52,7 +52,7 @@ const chartConfig = {
     },
 } satisfies ChartConfig
 
-export default function Grafica({sex} : {sex: 'F' | 'M'}) {
+export default function Grafica({sex, x, y, percentile} : {sex: 'F' | 'M', x: number | null, y: number | null, percentile: number | null}) {
     return (
         <ChartContainer config={chartConfig} className="h-150 w-[98%]">
             <LineChart accessibilityLayer data={chartData(sex)}>
@@ -81,6 +81,7 @@ export default function Grafica({sex} : {sex: 'F' | 'M'}) {
                     strokeWidth={2}
                     />
                 ))}
+                {percentile !== null && x !== null && y !== null && <ReferenceDot x={x} y={y} r={5} fill="#000" stroke="#fff" strokeWidth={1} label={{ position: 'top', value: `${percentile}%` }} />}
             </LineChart>
       </ChartContainer>
       );
