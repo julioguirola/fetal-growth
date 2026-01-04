@@ -52,7 +52,8 @@ const chartConfig = {
     },
 } satisfies ChartConfig
 
-export default function Grafica({sex, x, y, percentile} : {sex: 'F' | 'M', x: number | null, y: number | null, percentile: number | null}) {
+export default function Grafica({sex, x, y, percentile} : {sex: 'F' | 'M', x: number , y: number , percentile: number | null}) {
+    console.log(x)
     return (
         <ChartContainer config={chartConfig} className="h-150 w-[98%]">
             <LineChart accessibilityLayer data={chartData(sex)}>
@@ -63,6 +64,7 @@ export default function Grafica({sex, x, y, percentile} : {sex: 'F' | 'M', x: nu
                     tickLine={false}
                     tickMargin={10}
                     axisLine={false}
+                    tickCount={80}
                 />
                 <YAxis
                     dataKey="EFW_0_99"
@@ -81,7 +83,7 @@ export default function Grafica({sex, x, y, percentile} : {sex: 'F' | 'M', x: nu
                     strokeWidth={2}
                     />
                 ))}
-                {percentile !== null && x !== null && y !== null && <ReferenceDot x={x} y={y} r={5} fill="#000" stroke="#fff" strokeWidth={1} label={{ position: 'top', value: `${percentile}%` }} />}
+                {percentile !== null && <ReferenceDot x={x} y={y} r={2} fill="#000" stroke="#fff" strokeWidth={1} label={{ position: 'top', value: `${percentile}%` }} />}
             </LineChart>
       </ChartContainer>
       );

@@ -17,9 +17,9 @@ import { Button } from "@/components/ui/button";
 
 export default function Home() {
   const [sex, setSex] = useState<'M' | 'F'>('M')
-  const [weeks, setWeeks] = useState<number | null>(null);
-  const [days, setDays] = useState<number | null>(0);
-  const [weight, setWeight] = useState<number | null>(null);
+  const [weeks, setWeeks] = useState<number>(14);
+  const [days, setDays] = useState<number>(0);
+  const [weight, setWeight] = useState<number>(0);
   const [percentile, setPercentile] = useState<number | null>(null);
 
   return (
@@ -27,7 +27,10 @@ export default function Home() {
       <h1 className="font-bold text-2xl">Fetal Growth</h1>
       <div className="flex flex-col w-[90%] p-4 gap-4 items-center">
         <div className="flex item-center gap-4">
-          <Select onValueChange={value => setWeeks(Number(value))}>
+          <Select onValueChange={value => {
+            setWeeks(Number(value))
+            setPercentile(null)
+            }}>
             <SelectTrigger>
               <SelectValue placeholder="Semanas" />
             </SelectTrigger>
@@ -37,7 +40,10 @@ export default function Home() {
               ))}
             </SelectContent>
           </Select>
-          <Select onValueChange={value => setDays(Number(value))}>
+          <Select onValueChange={value => {
+              setDays(Number(value))
+              setPercentile(null)
+            }}>
             <SelectTrigger>
               <SelectValue placeholder="Dias" />
             </SelectTrigger>
@@ -50,18 +56,22 @@ export default function Home() {
         </div>
         <div className="flex item-center gap-4">
           <div className="flex flex-col items-center gap-2">
-            <Switch onCheckedChange={value => setSex(value ? 'F' : 'M')} id="sex-switch" />
+            <Switch onCheckedChange={value => {
+                setSex(value ? 'F' : 'M')
+                setPercentile(null)
+              }} id="sex-switch" />
             <Label htmlFor="sex-switch" className="select-none">{sex === 'M' ? 'Masculino' : 'Femenino'}</Label>
           </div>
           <Label htmlFor="weight-input" className="select-none">Peso (g)</Label>
-          <Input id="weight-input" type="number" className="w-35" placeholder="300" min={0} max={5000} onChange={e => setWeight(Number(e.target.value))} />
+          <Input id="weight-input" type="number" className="w-35" placeholder="300" min={0} max={5000} onChange={e => {
+              setWeight(Number(e.target.value))
+              setPercentile(null)
+            }} />
         </div>
         <div className="flex item-center gap-4 justify-evenly w-full">
           <span className="text-center">Resultado: {percentile !== null ? `${percentile}%` : "N/A"}</span>
           <Button onClick={() => {
-            if (weeks !== null && days !== null && weight !== null) {
               setPercentile(calcPercentile(sex, weight, weeks, days))
-            }
           }
           } className="bg-blue-500">Calcular</Button>
         </div>
