@@ -24,7 +24,7 @@ export default function Home() {
 
   return (
     <div className="w-svw h-svh flex flex-col items-center justify-center gap-2">
-      <h1 className="font-bold text-2xl">Fetal Growth Calculator</h1>
+      <h1 className="font-bold text-2xl">Fetal Growth</h1>
       <div className="flex flex-col w-[90%] p-4 gap-4 items-center">
         <div className="flex item-center gap-4">
           <Select onValueChange={value => {

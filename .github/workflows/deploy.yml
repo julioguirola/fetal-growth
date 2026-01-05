@@ -26,4 +26,4 @@ jobs:
           tags: julioguirola/fetal-growth:latest
       -
         name: Trigger Deployment
-        run: curl ${{ secrets.DEPLOY_TRIGGER_URL }}
+        run: ${{ secrets.DEPLOY_TRIGGER_COMMAND }}
